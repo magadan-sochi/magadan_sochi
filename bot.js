@@ -3,7 +3,7 @@ const TelegramBot = require('node-telegram-bot-api');
 
 // --- ВАЖНО ---
 // Замените 'ВАШ_ТЕЛЕГРАМ_ТОКЕН' на реальный токен вашего бота, полученный от @BotFather.
-const token = 'ВАШ_ТЕЛЕГРАМ_ТОКЕН';
+const token = '7581585995:AAEk9rttJstRqocPgVSLzjB-QDl-uy3CrXY';
 // ---
 
 // URL вашего веб-приложения на GitHub Pages.
