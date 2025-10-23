@@ -1,0 +1,12 @@
+{
+  "buildpacks": [
+    "https://github.com/Scalingo/static-buildpack.git"
+  ],
+  "stack": "scalingo-22",
+  "routes": [
+    {
+      "file": "dist/(.*)",
+      "try_files": ["$1", "index.html"]
+    }
+  ]
+}

@@ -81,9 +81,24 @@ export const api = {
       return true;
   },
 
-  getMenuItems: (): Promise<MenuItem[]> => supabase.from('menu_items').select('*').eq('is_active', true).then(res => res.data || []),
+  // FIX: Converted .then() to async/await to ensure a true Promise is returned, resolving the PromiseLike type error.
+  getMenuItems: async (): Promise<MenuItem[]> => {
+    const { data, error } = await supabase.from('menu_items').select('*').eq('is_active', true);
+    if (error) {
+        console.error('Error fetching menu items:', error.message);
+        return [];
+    }
+    return data || [];
+  },
   
-  getMenuItem: (id: number): Promise<MenuItem | undefined> => supabase.from('menu_items').select('*').eq('id', id).single().then(res => res.data || undefined),
+  // FIX: Converted .then() to async/await to ensure a true Promise is returned, resolving the PromiseLike type error.
+  getMenuItem: async (id: number): Promise<MenuItem | undefined> => {
+    const { data, error } = await supabase.from('menu_items').select('*').eq('id', id).single();
+    if (error && error.code !== 'PGRST116') { // PGRST116: exact one row not found
+      console.error(`Error fetching menu item ${id}:`, error.message);
+    }
+    return data ?? undefined;
+  },
 
   addMenuItem: async (itemData: NewMenuItem): Promise<MenuItem | null> => {
     const normalizedItem = {
@@ -121,7 +136,15 @@ export const api = {
     return data;
   },
 
-  getCategories: (): Promise<MenuItemCategory[]> => supabase.from('menu_categories').select('*').then(res => res.data || []),
+  // FIX: Converted .then() to async/await to ensure a true Promise is returned, resolving the PromiseLike type error.
+  getCategories: async (): Promise<MenuItemCategory[]> => {
+    const { data, error } = await supabase.from('menu_categories').select('*');
+    if (error) {
+        console.error('Error fetching categories:', error.message);
+        return [];
+    }
+    return data || [];
+  },
   
   getQuizzes: async (): Promise<Quiz[]> => {
     const { data, error } = await supabase
@@ -170,7 +193,23 @@ export const api = {
     return mockLeaderboard;
   },
 
-  getAchievements: (): Promise<Achievement[]> => supabase.from('achievements').select('*').then(res => res.data || []),
+  // FIX: Converted .then() to async/await to ensure a true Promise is returned, resolving the PromiseLike type error.
+  getAchievements: async (): Promise<Achievement[]> => {
+    const { data, error } = await supabase.from('achievements').select('*');
+    if (error) {
+        console.error('Error fetching achievements:', error.message);
+        return [];
+    }
+    return data || [];
+  },
   
-  getUserAchievements: (userId: string): Promise<UserAchievement[]> => supabase.from('user_achievements').select('*').eq('user_id', userId).then(res => res.data || []),
+  // FIX: Converted .then() to async/await to ensure a true Promise is returned, resolving the PromiseLike type error.
+  getUserAchievements: async (userId: string): Promise<UserAchievement[]> => {
+    const { data, error } = await supabase.from('user_achievements').select('*').eq('user_id', userId);
+    if (error) {
+        console.error(`Error fetching user achievements for ${userId}:`, error.message);
+        return [];
+    }
+    return data || [];
+  },
 };
