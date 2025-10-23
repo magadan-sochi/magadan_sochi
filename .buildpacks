@@ -1,2 +1,2 @@
-npm install
-npm run build
+https://github.com/Scalingo/nodejs-buildpack.git
+https://github.com/Scalingo/static-buildpack.git
