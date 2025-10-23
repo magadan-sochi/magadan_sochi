@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Магадан Гейм</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+      body {
+        overscroll-behavior-y: contain;
+        /* New modern background */
+        background-color: #0f172a; /* fallback */
+        background-image: linear-gradient(160deg, #0f172a 0%, #1c192e 100%);
+      }
+      /* New decorative background elements */
+      .aurora-orb {
+        position: fixed;
+        opacity: 0.3;
+        filter: blur(100px);
+        border-radius: 50%;
+        z-index: -1;
+      }
+      /* Animation styles for flashcards */
+      @keyframes slide-out-left {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(-120%) rotate(-15deg); opacity: 0; }
+      }
+      @keyframes slide-out-right {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(120%) rotate(15deg); opacity: 0; }
+      }
+      /* Make slide out a bit more dynamic with rotation */
+      .animate-slide-out-left {
+        animation: slide-out-left 0.4s ease-in-out forwards;
+      }
+      .animate-slide-out-right {
+        animation: slide-out-right 0.4s ease-in-out forwards;
+      }
+
+      /* Custom styles for the 3D card flip */
+      .perspective-1000 { perspective: 1000px; }
+      .transform-style-3d { transform-style: preserve-3d; }
+      .rotate-y-180 { transform: rotateY(180deg); }
+      .backface-hidden { backface-visibility: hidden; }
+      
+      /* Hide scrollbar for the card back, while still allowing scroll */
+      .card-back-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      .card-back-scroll {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2"
+  }
+}
+</script>
+</head>
+  <body class="text-white antialiased">
+    <!-- The decorative background orbs -->
+    <div class="aurora-orb top-[-10%] left-[-10%] w-96 h-96 bg-cyan-500"></div>
+    <div class="aurora-orb bottom-[-10%] right-[-10%] w-96 h-96 bg-fuchsia-500"></div>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
